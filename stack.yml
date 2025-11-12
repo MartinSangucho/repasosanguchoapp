@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  sanguchoapp:
+    image: sanguchoimg:latest
+    build: .
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.sanguchoapp.entrypoints=http"
+        - "traefik.http.routers.sanguchoapp.rule=Host(`sanguchoapp.bylean.com`)"
+        - "traefik.http.middlewares.sanguchoapp-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.sanguchoapp.middlewares=sanguchoapp-https-redirect"
+        - "traefik.http.routers.sanguchoapp-secure.entrypoints=https"
+        - "traefik.http.routers.sanguchoapp-secure.rule=Host(`sanguchoapp.bylean.com`)"
+        - "traefik.http.routers.sanguchoapp-secure.tls=true"
+        - "traefik.http.routers.sanguchoapp-secure.tls.certresolver=http"
+        - "traefik.http.routers.sanguchoapp-secure.service=sanguchoapp"
+        - "traefik.http.services.sanguchoapp.loadbalancer.server.port=80"
+        - "traefik.docker.network=traefik-public"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
