@@ -3,22 +3,10 @@ APP_NAME=sanguchoapp
 STACK_FILE=stack.yml
 
 build:
-	docker build -t $(APP_NAME):latest .
+	docker build -t royecto_quintoa_img:latest .
 
 deploy:
-	docker stack deploy --with-registry-auth -c $(STACK_FILE) $(APP_NAME)
-
-logs:
-	docker service logs -f $(APP_NAME)_$(APP_NAME)
+	docker stack deploy --with-registry-auth -c stack.yml quinto
 
 rm:
-	docker stack rm $(APP_NAME)
-
-ps:
-	docker service ls
-
-restart:
-	make rm
-	sleep 5
-	make build
-	make deploy
+	docker stack rm quinto
