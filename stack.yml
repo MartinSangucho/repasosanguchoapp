@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  martinlean:
+    image: ulloamarapp:latest
+    build: .
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.ulloamarapp.entrypoints=http"
+        - "traefik.http.routers.ulloamarapp.rule=Host(`ulloamarapp.byronrm.com`)"
+        - "traefik.http.middlewares.ulloamarapp-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.ulloamarapp.middlewares=ulloamarapp-https-redirect"
+        - "traefik.http.routers.ulloamarapp-secure.entrypoints=https"
+        - "traefik.http.routers.ulloamarapp-secure.rule=Host(`ulloamarapp.byronrm.com`)"
+        - "traefik.http.routers.ulloamarapp-secure.tls=true"
+        - "traefik.http.routers.ulloamarapp-secure.tls.certresolver=http"
+        - "traefik.http.routers.ulloamarapp-secure.service=ulloamarapp"
+        - "traefik.http.services.ulloamarapp.loadbalancer.server.port=80"
+        - "traefik.docker.network=traefik-public"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
