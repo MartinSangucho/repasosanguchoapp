@@ -1,22 +1,22 @@
 version: "3.8"
 
 services:
-  ulloaapp:
-    image: ulloaimg:latest
+  sanguchoapp:
+    image: martinsangucho/sanguchoimg:latest
     deploy:
       replicas: 1
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.ulloaapp.entrypoints=http"
-        - "traefik.http.routers.ulloaapp.rule=Host(ulloaapp.byronrm.com)"
-        - "traefik.http.middlewares.ulloaapp-https-redirect.redirectscheme.scheme=https"
-        - "traefik.http.routers.ulloaapp.middlewares=ulloaapp-https-redirect"
-        - "traefik.http.routers.ulloaapp-secure.entrypoints=https"
-        - "traefik.http.routers.ulloaapp-secure.rule=Host(ulloaapp.byronrm.com)"
-        - "traefik.http.routers.ulloaapp-secure.tls=true"
-        - "traefik.http.routers.ulloaapp-secure.tls.certresolver=http"
-        - "traefik.http.routers.ulloaapp-secure.service=ulloaapp"
-        - "traefik.http.services.ulloaapp.loadbalancer.server.port=80"
+        - "traefik.http.routers.sanguchoapp.entrypoints=http"
+        - "traefik.http.routers.sanguchoapp.rule=Host(`sanguchoapp.byronrm.com`)"
+        - "traefik.http.middlewares.sanguchoapp-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.sanguchoapp.middlewares=sanguchoapp-https-redirect"
+        - "traefik.http.routers.sanguchoapp-secure.entrypoints=https"
+        - "traefik.http.routers.sanguchoapp-secure.rule=Host(`sanguchoapp.byronrm.com`)"
+        - "traefik.http.routers.sanguchoapp-secure.tls=true"
+        - "traefik.http.routers.sanguchoapp-secure.tls.certresolver=http"
+        - "traefik.http.routers.sanguchoapp-secure.service=sanguchoapp"
+        - "traefik.http.services.sanguchoapp.loadbalancer.server.port=80"
         - "traefik.docker.network=traefik-public"
     networks:
       - traefik-public
