@@ -2,7 +2,8 @@ name: Build and publish Docker image
 
 on:
   push:
-    branches: [ main ]  # o 'master' si tu rama se llama así
+    branches: [ main ]
+  workflow_dispatch: # para poder lanzarlo manualmente también
 
 permissions:
   contents: read
